@@ -9,6 +9,7 @@
 - 김지연: 
 - 구다희: heeouo@kookmin.ac.kr
 - Denni: 
+- 김지웅: jiungsapple@gmail.com
 
 
 ### 일정
