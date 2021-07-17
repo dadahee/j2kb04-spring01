@@ -1,0 +1,2 @@
+com/cms/cmsedu2/CmsEdu2ApplicationTests.java
+ com.cms.cmsedu2.CmsEdu2ApplicationTests
