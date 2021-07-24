@@ -1,46 +1,46 @@
 # 3주차 추가 학습내용
 
 - [3주차 추가 학습내용](#3주차-추가-학습내용)
-  - [1.1. 스프링 JdbcTemplate](#11-스프링-jdbctemplate)
-    - [1.1.1. java.util.Optional<T> 클래스](#111-javautiloptionalt-클래스)
-      - [정의](#정의)
-      - [왜 사용할까?](#왜-사용할까)
-      - [특징](#특징)
-      - [Optional 객체 생성](#optional-객체-생성)
-      - [Optional 객체 접근](#optional-객체-접근)
-      - [그 외 메소드](#그-외-메소드)
-    - [1.1.3. 템플릿 메소드 패턴](#113-템플릿-메소드-패턴)
-    - [1.1.4. JdbcTemplate과 RowMapper](#114-jdbctemplate과-rowmapper)
-      - [JdbcTemplate 사용법](#jdbctemplate-사용법)
-      - [RowMapper](#rowmapper)
-  - [1.2. JPA](#12-jpa)
-    - [1.2.1. Generation Stragety](#121-generation-stragety)
-    - [1.2.2. EntityManager](#122-entitymanager)
-      - [Entity](#entity)
-      - [EntityManager](#entitymanager)
-      - [EntityManagerFactory](#entitymanagerfactory)
-  - [1.3. 스프링 데이터 JPA](#13-스프링-데이터-jpa)
-    - [1.3.1. Querydsl](#131-querydsl)
+  - [1. 스프링 JdbcTemplate](#1-스프링-jdbctemplate)
+    - [1.1. java.util.Optional<T> 클래스](#11-javautiloptionalt-클래스)
+      - [1.1.1. 정의](#111-정의)
+      - [1.1.2. 왜 사용할까?](#112-왜-사용할까)
+      - [1.1.3. 특징](#113-특징)
+      - [1.1.4. Optional 객체 생성](#114-optional-객체-생성)
+      - [1.1.5. Optional 객체 접근](#115-optional-객체-접근)
+      - [1.1.6. 그 외 메소드](#116-그-외-메소드)
+    - [1.2. 템플릿 메소드 패턴](#12-템플릿-메소드-패턴)
+    - [1.3. JdbcTemplate과 RowMapper](#13-jdbctemplate과-rowmapper)
+      - [1.3.1. JdbcTemplate 사용법](#131-jdbctemplate-사용법)
+      - [1.3.2. RowMapper](#132-rowmapper)
+  - [2. JPA](#2-jpa)
+    - [2.1. Generation Stragety](#21-generation-stragety)
+    - [2.2. EntityManager](#22-entitymanager)
+      - [2.2.1. Entity](#221-entity)
+      - [2.2.2. EntityManager](#222-entitymanager)
+      - [2.2.3. EntityManagerFactory](#223-entitymanagerfactory)
+  - [3. 스프링 데이터 JPA](#3-스프링-데이터-jpa)
+    - [3.1. Querydsl](#31-querydsl)
 
 ------
 
-## 1.1. 스프링 JdbcTemplate
+## 1. 스프링 JdbcTemplate
 
-### 1.1.1. java.util.Optional<T> 클래스
+### 1.1. java.util.Optional<T> 클래스
 
-#### 정의
+#### 1.1.1. 정의
 
 - `T` 타입의 객체를 포장해주는 래퍼 클래스(Wrapper Class)
 
-#### 왜 사용할까?
+#### 1.1.2. 왜 사용할까?
 
 - `NullPointerException` 예외 처리 용이
 
-#### 특징
+#### 1.1.3. 특징
 
 모든 타입의 참조 변수를 저장 가능
 
-#### Optional 객체 생성
+#### 1.1.4. Optional 객체 생성
 
 - `Optional.of(object)`: object가 null이면 `NullPointerException` 발생
 - `Optional.ofNullable(object)`: `NullPointerException` 발생 X
@@ -50,7 +50,7 @@
     Optional<String> nullable_optional = Optional.ofNullable(null); // ok
     ```
 
-#### Optional 객체 접근
+#### 1.1.5. Optional 객체 접근
 
 - `get()`
   - Optional 객체에 저장된 값 접근
@@ -73,7 +73,7 @@ if (opt.isPresent()){
 }
 ```
 
-#### 그 외 메소드
+#### 1.1.6. 그 외 메소드
 
 - `orElse()`: 저장된 값이 존재하면 그 값을 반환, 값이 존재하지 않으면 인수로 전달된 값을 반환
 - `orElseGet()`: 저장된 값이 존재하면 그 값을 반환하고, 값이 존재하지 않으면 인수로 전달된 람다 표현식의 결괏값을 반환
@@ -87,7 +87,7 @@ if (opt.isPresent()){
 - 참고자료: [TCP School](http://tcpschool.com/java/java_stream_optional)
 
 
-### 1.1.3. 템플릿 메소드 패턴
+### 1.2. 템플릿 메소드 패턴
 
 - 어떤 작업을 처리하는 일부분을 하위 클래스로 캡슐화 -> 전체 수행 구조는 바꾸지 않으면서 특정 단계에서 수행하는 내역을 바꾸는 패턴
 - 장점
@@ -103,12 +103,12 @@ if (opt.isPresent()){
     - 상위 클래스에 구현된 템플릿 메서드의 일반적인 알고리즘에서 하위 클래스에 적합하게 primitive 메서드나 hook 메서드를 오버라이드하는 클래스
 - 참고자료: [템플릿 메소드 패턴](https://gmlwjd9405.github.io/2018/07/13/template-method-pattern.html)
 
-### 1.1.4. JdbcTemplate과 RowMapper
+### 1.3. JdbcTemplate과 RowMapper
 
 - Jdbc의 흐름: DB 연동에 필요한 객체 생성 -> 쿼리 실행 -> 객체 닫기(close())
 - -> JdbcTemplate을 이용하여 간략화
 
-#### JdbcTemplate 사용법
+#### 1.3.1. JdbcTemplate 사용법
 
 1. DB 연동: JdbcTemplate에 DataSource 설정
 2. 쿼리 실행
@@ -124,7 +124,7 @@ if (opt.isPresent()){
      - int update(String sql, Object... args)
  
 
-#### RowMapper
+#### 1.3.2. RowMapper
 
 ```java
 public interface RowMapper<T> {
@@ -162,9 +162,9 @@ public interface RowMapper<T> {
 
 ------
 
-## 1.2. JPA
+## 2. JPA
 
-### 1.2.1. Generation Stragety
+### 2.1. Generation Stragety
 
 - (데이터베이스 테이블의) 기본 키(Primary Key)
   - 자연 키(Natural Key): 의미 있는 키
@@ -241,9 +241,9 @@ public interface RowMapper<T> {
 참고자료: [키 생성 전략](https://www.popit.kr/%ED%95%98%EC%9D%B4%EB%B2%84%EB%84%A4%EC%9D%B4%ED%8A%B8%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%90%EB%8F%99-%ED%82%A4-%EC%83%9D%EC%84%B1-%EC%A0%84%EB%9E%B5%EC%9D%84-%EA%B2%B0%EC%A0%95%ED%95%98/)
 참고자료: [JPA 기본 키 전략](https://feco.tistory.com/96)
 
-### 1.2.2. EntityManager
+### 2.2. EntityManager
 
-#### Entity
+#### 2.2.1. Entity
 
 - DB에서 영속적으로 저장된 데이터를 자바 객체로 매핑하여 **인스턴스 형태로 존재하는 데이터**
 - 생명 주기
@@ -257,22 +257,22 @@ public interface RowMapper<T> {
   - 삭제(removed): 삭제된 상태
     - 엔티티를 영속성 컨텍스트와 데이터베이스에서 삭제한 상태
 
-#### EntityManager
+#### 2.2.2. EntityManager
 
 - 엔티티를 관리하는 역할을 수행하는 클래스
 - 내부에 **영속성 컨텍스트(Persistence Context)**를 두어 엔티티를 관리
   - Persistence Context: 엔티티를 영구 저장하는 환경
 
 
-#### EntityManagerFactory
+#### 2.2.3. EntityManagerFactory
 
 EntityManager 인스턴스를 관리
 
 ------
 
-## 1.3. 스프링 데이터 JPA
+## 3. 스프링 데이터 JPA
 
-### 1.3.1. Querydsl
+### 3.1. Querydsl
 
 Querydsl 정적 타입을 이용해서 SQL과 같은 쿼리를 생성할 수 있도록 해 주는 프레임워크다. 문자열로 작성하거나 XML 파일에 쿼리를 작성하는 대신, Querydsl이 제공하는 플루언트(Fluent) API를 이용해서 쿼리를 생성할 수 있다.
 
