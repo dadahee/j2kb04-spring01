@@ -1,0 +1,33 @@
+
+server:
+  port: 8000
+  servlet:
+    context-path: /  #context 위치
+
+spring:
+  #  mvc:
+  #    view:
+  #      prefix: /WEB-INF/views/
+  #      suffix: .jsp
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/CMSEdu2?serverTimezone=Asia/Seoul
+    # DB 주소는 localhost:3306 이고, DataBase 이름을 CMSEdu1 라고 했다.
+    username: admin  # 접속 유저이다.
+    password: admin1234  # 접속 유저의 identified key
+#
+#  jpa: # pom.xml 에 <artifactId>spring-boot-starter-data-jpa</artifactId> 설치를 하면 작동한다.
+#    open-in-view: true
+#    hibernate:
+#      ddl-auto: create
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  # 이 전략을 쓰게되면,
+#      use-new-id-generator-mappings: false
+#    show-sql: true
+#    # 이것을 true 하면 query 문이 출력 된다.  이 프로퍼티가 문제을 발생시킨다.
+#    properties:
+#      hibernate.format_sql: true
+#    jackson:
+#      serialization:
+#        fail-on-empty-beans: false
